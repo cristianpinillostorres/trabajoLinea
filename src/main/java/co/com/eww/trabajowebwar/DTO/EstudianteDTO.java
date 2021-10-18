@@ -8,6 +8,7 @@ public class EstudianteDTO implements Serializable {
     
     private String cedula;
     
+    
     private String nombre;
     
     private String apellido;
