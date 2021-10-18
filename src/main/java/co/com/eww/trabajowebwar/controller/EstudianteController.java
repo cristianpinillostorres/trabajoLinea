@@ -61,11 +61,8 @@ public class EstudianteController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modificarEstudiante(@Valid EstudianteDTO estudiante) throws ClassNotFoundException, IOException {
         Boolean respuesta = estudianteService.modificarEstudiante(estudiante);
-
-        if (respuesta == true){
           return Response.status(Response.Status.OK).build(); 
-        }
-        return Response.status(Response.Status.NOT_FOUND).build();
+
     }
 
     //Servicio para listar un estudiante por cedula retornando el estudiante en formato Json
