@@ -17,6 +17,10 @@ public class EstudianteDTO implements Serializable {
     
     private String correo;
     
+    
+    
+    
+    
     private List<String> listaMaterias;
     
     private int[] numero;
