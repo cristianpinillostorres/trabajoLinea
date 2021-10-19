@@ -12,10 +12,18 @@ public class ExceptionHandler implements ExceptionMapper<Exception>{
         
         ex.printStackTrace();
         ExceptionWrapper wrraper;
-        if(ex instanceof BussinessException ) {
+        if(ex instanceof ConflictException) {
+             wrraper = new ExceptionWrapper("400", "CONFLICT", ex.getMessage(),"/estudiantes/");    
+            return Response.status(Response.Status.CONFLICT).entity(wrraper).build();
+        } else 
+        if(ex instanceof BadRequestEx) {
              wrraper = new ExceptionWrapper("400", "BAD_REQUEST", ex.getMessage(),"/estudiantes/");    
             return Response.status(Response.Status.BAD_REQUEST).entity(wrraper).build();
-        } else {
+        }else
+            if(ex instanceof NotFoundEx) {
+             wrraper = new ExceptionWrapper("404", "NOT_FOUND", ex.getMessage(),"/estudiantes/");    
+            return Response.status(Response.Status.NOT_FOUND).entity(wrraper).build();
+        } else{
               wrraper = new ExceptionWrapper("500", "INTERNAL_SERVER_ERROR", "","/estudiantes/");    
              return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(wrraper).build();
         } 

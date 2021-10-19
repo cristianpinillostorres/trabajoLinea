@@ -1,7 +1,10 @@
 org\netbeans\rest\application\config\ApplicationConfig.class
 co\com\eww\trabajowebwar\exception\BussinessException.class
 co\com\eww\trabajowebwar\DTO\EstudianteDTO.class
+co\com\eww\trabajowebwar\exception\NotFoundEx.class
 co\com\eww\trabajowebwar\exception\ExceptionWrapper.class
 co\com\eww\trabajowebwar\controller\EstudianteController.class
+co\com\eww\trabajowebwar\exception\ConflictException.class
 co\com\eww\trabajowebwar\service\EstudianteService.class
+co\com\eww\trabajowebwar\exception\BadRequestEx.class
 co\com\eww\trabajowebwar\exception\ExceptionHandler.class

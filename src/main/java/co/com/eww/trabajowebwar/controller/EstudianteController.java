@@ -2,17 +2,17 @@ package co.com.eww.trabajowebwar.controller;
 
 import co.com.eej.trabajoejbjar.Service.IEstudianteService;
 import co.com.eww.trabajowebwar.DTO.EstudianteDTO;
+import co.com.eww.trabajowebwar.exception.BadRequestEx;
 import co.com.eww.trabajowebwar.exception.BussinessException;
-import co.com.eww.trabajowebwar.exception.ExceptionWrapper;
+import co.com.eww.trabajowebwar.exception.ConflictException;
+import co.com.eww.trabajowebwar.exception.NotFoundEx;
 import co.com.eww.trabajowebwar.service.EstudianteService;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,7 +37,7 @@ public class EstudianteController {
     @POST
     @Path("/insertar")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response insertarEstudiante(@Valid EstudianteDTO estudiante) throws IOException {
+    public Response insertarEstudiante(@Valid EstudianteDTO estudiante) throws IOException, FileNotFoundException, ClassNotFoundException, ConflictException, BadRequestEx {
         estudianteService.guardarEstudiante(estudiante, true);
         return Response.status(Response.Status.CREATED).build();
     }
@@ -59,9 +59,9 @@ public class EstudianteController {
     @PUT
     @Path("/modificar")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modificarEstudiante(@Valid EstudianteDTO estudiante) throws ClassNotFoundException, IOException {
-        Boolean respuesta = estudianteService.modificarEstudiante(estudiante);
-          return Response.status(Response.Status.OK).build(); 
+    public Response modificarEstudiante(@Valid EstudianteDTO estudiante) throws ClassNotFoundException, IOException, NotFoundEx {
+        estudianteService.modificarEstudiante(estudiante);
+        return Response.status(Response.Status.OK).build(); 
 
     }
 
@@ -69,23 +69,17 @@ public class EstudianteController {
     @GET
     @Path("/obtenerPorCedula/{cedula}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerEstudiante(@PathParam("cedula") String cedula ) throws ClassNotFoundException, IOException, BussinessException {
+    public Response obtenerEstudiante(@PathParam("cedula") String cedula ) throws ClassNotFoundException, IOException, NotFoundEx, BadRequestEx {
         EstudianteDTO estudiante = estudianteService.obtenerEstudiante(cedula);
-        if(estudiante == null){
-            return Response.status(Response.Status.NOT_FOUND).entity(estudiante).build();
-        }
         return Response.status(Response.Status.OK).entity(estudiante).build();
     }
 
     //Servicio para eliminar un estudiante por cedula 
     @DELETE
     @Path("/eliminar/{cedula}")
-    public Response eliminarEstudiante(@PathParam("cedula") @NotNull @Size(min = 10, max = 10) String cedula) throws BussinessException {
-        Boolean respuesta = estudianteService.eliminarEstudiante(cedula);
-        if (respuesta == true){
-          return Response.status(Response.Status.NO_CONTENT).build();  
-        }
-        return Response.status(Response.Status.NOT_FOUND).build();
+    public Response eliminarEstudiante(@PathParam("cedula") String cedula) throws ClassNotFoundException, IOException, BadRequestEx, NotFoundEx, ConflictException {
+        estudianteService.eliminarEstudiante(cedula);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
 }

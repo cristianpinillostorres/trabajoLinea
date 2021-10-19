@@ -7,8 +7,7 @@ import java.util.List;
 public class EstudianteDTO implements Serializable {
     
     private String cedula;
-    
-    
+   
     private String nombre;
     
     private String apellido;
@@ -16,11 +15,7 @@ public class EstudianteDTO implements Serializable {
     private Integer edad;
     
     private String correo;
-    
-    
-    
-    
-    
+
     private List<String> listaMaterias;
     
     private int[] numero;
